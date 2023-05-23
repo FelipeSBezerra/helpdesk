@@ -1,9 +1,15 @@
-package com.felipe.helpdesk.domain;
+package com.felipe.helpdesk.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.felipe.helpdesk.domain.Tecnico;
 import com.felipe.helpdesk.domain.enums.Perfil;
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.FetchType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -11,39 +17,29 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
-@Entity
-public abstract class Pessoa implements Serializable {
-
+@Getter
+@Setter
+@NoArgsConstructor
+public class TecnicoDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
-    @Column(unique = true)
     protected String cpf;
-    @Column(unique = true)
     protected String email;
     protected String senha;
-    @ElementCollection(fetch = FetchType.EAGER)
-    // garante que a lista de perfis seja enviada imediatamente junto com o Usuario
-    @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     protected Instant dataCriacao = Instant.now();
 
-    public Pessoa() {
-        setPerfis(Perfil.CLIENTE);
-    }
-
-    public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.senha = senha;
-        setPerfis(Perfil.CLIENTE);
+    public TecnicoDto(Tecnico tecnico) {
+        this.id = tecnico.getId();
+        this.nome = tecnico.getNome();
+        this.cpf = tecnico.getCpf();
+        this.email = tecnico.getEmail();
+        this.senha = tecnico.getSenha();
+        this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        this.dataCriacao = tecnico.getDataCriacao();
     }
 
     // Método transforma cada Integer da lista de perfis em um tipo enumerado Perfil
