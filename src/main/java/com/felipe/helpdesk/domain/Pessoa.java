@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Entity
 public abstract class Pessoa implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
@@ -27,7 +29,7 @@ public abstract class Pessoa implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER) // garante que a lista de perfis seja enviada imediatamente junto com o Usuario
     @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis = new HashSet<>();
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z", timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     protected Instant dataCriacao = Instant.now();
 
     public Pessoa(){
