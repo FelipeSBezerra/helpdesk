@@ -7,6 +7,7 @@ import com.felipe.helpdesk.repository.PessoaRepository;
 import com.felipe.helpdesk.repository.TecnicoRepository;
 import com.felipe.helpdesk.service.exception.DataIntegrityViolationException;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class TecnicoService {
     private PessoaRepository pessoaRepository;
 
     public Tecnico findById(Integer id) {
-        return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Técnico não encontrado: Id=" + id));
+        return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um técnico com o id" + id + " na base de dados"));
     }
 
     public List<Tecnico> findAll() {
@@ -37,6 +38,14 @@ public class TecnicoService {
         return tecnicoRepository.save(obj);
     }
 
+    public Tecnico update(Integer id, @Valid TecnicoDto tecnicoDto) {
+        tecnicoDto.setId(id);
+        Tecnico obj = findById(id);
+        validaPorCpfEEmail(tecnicoDto);
+        obj = new Tecnico(tecnicoDto);
+        return tecnicoRepository.save(obj);
+    }
+
     private void validaPorCpfEEmail(TecnicoDto tecnicoDto) {
         Optional<Pessoa> objCpf = pessoaRepository.findByCpf(tecnicoDto.getCpf());
         if (objCpf.isPresent() && objCpf.get().getId() != tecnicoDto.getId()) {
@@ -44,7 +53,7 @@ public class TecnicoService {
         }
 
         Optional<Pessoa> objEmail = pessoaRepository.findByEmail(tecnicoDto.getEmail());
-        if (objEmail.isPresent() && objEmail.get().getId() != tecnicoDto.getId()){
+        if (objEmail.isPresent() && objEmail.get().getId() != tecnicoDto.getId()) {
             throw new DataIntegrityViolationException("Email já cadastrado!");
         }
     }

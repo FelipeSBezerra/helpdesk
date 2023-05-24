@@ -36,4 +36,9 @@ public class TecnicoController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TecnicoDto> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDto tecnicoDto){
+        return new ResponseEntity<>(new TecnicoDto(tecnicoService.update(id, tecnicoDto)), HttpStatus.OK);
+    }
 }
