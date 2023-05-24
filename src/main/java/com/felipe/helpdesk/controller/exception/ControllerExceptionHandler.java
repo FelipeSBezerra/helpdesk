@@ -1,5 +1,6 @@
 package com.felipe.helpdesk.controller.exception;
 
+import com.felipe.helpdesk.service.exception.DataIntegrityViolationException;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String error = "Object not found";
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return new ResponseEntity<>(err, status);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
+        String error = "Data integrity violation";
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return new ResponseEntity<>(err, status);
     }
