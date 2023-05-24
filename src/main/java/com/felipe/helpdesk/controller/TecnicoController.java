@@ -2,6 +2,7 @@ package com.felipe.helpdesk.controller;
 
 import com.felipe.helpdesk.domain.dto.TecnicoDto;
 import com.felipe.helpdesk.service.TecnicoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class TecnicoController {
     }
 
     @PostMapping
-    public ResponseEntity<TecnicoDto> create(@RequestBody TecnicoDto tecnicoDto){
+    public ResponseEntity<TecnicoDto> create(@Valid @RequestBody TecnicoDto tecnicoDto){
         TecnicoDto obj = new TecnicoDto(tecnicoService.save(tecnicoDto));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();

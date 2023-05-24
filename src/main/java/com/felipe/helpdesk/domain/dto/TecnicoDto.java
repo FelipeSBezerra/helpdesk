@@ -7,6 +7,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.FetchType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +24,13 @@ public class TecnicoDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected Integer id;
+    @NotNull(message = "O campo NOME é requerido!")
     protected String nome;
+    @NotNull(message = "O campo CPF é requerido!")
     protected String cpf;
+    @NotNull(message = "O campo EMAIL é requerido!")
     protected String email;
+    @NotNull(message = "O campo SENHA é requerido!")
     protected String senha;
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
