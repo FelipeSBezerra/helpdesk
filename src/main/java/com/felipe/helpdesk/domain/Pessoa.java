@@ -26,8 +26,7 @@ public abstract class Pessoa implements Serializable {
     @Column(unique = true)
     protected String email;
     protected String senha;
-    @ElementCollection(fetch = FetchType.EAGER)
-    // garante que a lista de perfis seja enviada imediatamente junto com o Usuario
+    @ElementCollection(fetch = FetchType.EAGER)// garante que a lista de perfis seja enviada imediatamente junto com o Usuario
     @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
