@@ -37,7 +37,7 @@ public class TecnicoDto implements Serializable {
     protected Instant dataCriacao = Instant.now();
 
     public TecnicoDto(){
-        setPerfis(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public TecnicoDto(Tecnico tecnico) {
@@ -48,7 +48,7 @@ public class TecnicoDto implements Serializable {
         this.senha = tecnico.getSenha();
         this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
         this.dataCriacao = tecnico.getDataCriacao();
-        setPerfis(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     // Método transforma cada Integer da lista de perfis em um tipo enumerado Perfil
@@ -56,10 +56,7 @@ public class TecnicoDto implements Serializable {
         return perfis.stream().map(Perfil::toEnum).collect(Collectors.toSet());
     }
 
-    // Por causa do Lombok, o método permaneceu como 'setPerfis()', mas o que ele faz é
-    // adicionar um tipo Perfil na lista de perfis do usuario, a nomeclatura mais
-    // aproriada seria 'addPerfil()'
-    public void setPerfis(Perfil perfil) {
+    public void addPerfis(Perfil perfil) {
         this.perfis.add(perfil.getCodigo());
     }
 }

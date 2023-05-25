@@ -27,6 +27,7 @@ public class DbService {
     public void instanciaDb(){
         Tecnico tec1 = new Tecnico(null, "Felipe Bezerra", "73617594085", "felipe@mail.com", "123456");
         tec1.setPerfis(Perfil.ADMIN);
+        tec1.setPerfis(Perfil.TECNICO);
 
         Cliente cli1 = new Cliente(null, "Ricardo", "88645874032", "ricardo@mail.com", "654321");
 
