@@ -42,8 +42,9 @@ public class TecnicoService {
         tecnicoDto.setId(id);
         Tecnico obj = findById(id);
         validaPorCpfEEmail(tecnicoDto);
-        obj = new Tecnico(tecnicoDto);
-        return tecnicoRepository.save(obj);
+        Tecnico tecnicoAtualizado = new Tecnico(tecnicoDto);
+        tecnicoAtualizado.setDataCriacao(obj.getDataCriacao());
+        return tecnicoRepository.save(tecnicoAtualizado);
     }
 
     private void validaPorCpfEEmail(TecnicoDto tecnicoDto) {

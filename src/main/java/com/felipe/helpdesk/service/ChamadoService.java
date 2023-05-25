@@ -43,7 +43,10 @@ public class ChamadoService {
         if (obj.getId() != chamadoDto.getId()){
             chamadoDto.setId(id);
         }
-        return chamadoRepository.save(newChamado(chamadoDto));
+        Chamado chamadoAtualizado = newChamado(chamadoDto);
+        chamadoAtualizado.setDataAbertura(obj.getDataAbertura());
+
+        return chamadoRepository.save(chamadoAtualizado);
     }
 
     // Metodo que transforma um ChamadoDto em Chamado para que seja salvo na base de dados

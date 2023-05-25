@@ -42,8 +42,9 @@ public class ClienteService {
         clienteDto.setId(id);
         Cliente obj = findById(id);
         validaPorCpfEEmail(clienteDto);
-        obj = new Cliente(clienteDto);
-        return clienteRepository.save(obj);
+        Cliente clienteAtualizado = new Cliente(clienteDto);
+        clienteAtualizado.setDataCriacao(obj.getDataCriacao());
+        return clienteRepository.save(clienteAtualizado);
     }
 
     private void validaPorCpfEEmail(ClienteDto clienteDto) {
