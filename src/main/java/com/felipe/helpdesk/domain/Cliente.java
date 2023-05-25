@@ -1,6 +1,7 @@
 package com.felipe.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.felipe.helpdesk.domain.dto.ClienteDto;
 import com.felipe.helpdesk.domain.enums.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -26,5 +28,15 @@ public class Cliente extends Pessoa{
 
     public Cliente(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
+    }
+
+    public Cliente(ClienteDto clienteDto) {
+        this.id = clienteDto.getId();
+        this.nome = clienteDto.getNome();
+        this.cpf = clienteDto.getCpf();
+        this.email = clienteDto.getEmail();
+        this.senha = clienteDto.getSenha();
+        this.perfis = clienteDto.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        this.dataCriacao = clienteDto.getDataCriacao();
     }
 }

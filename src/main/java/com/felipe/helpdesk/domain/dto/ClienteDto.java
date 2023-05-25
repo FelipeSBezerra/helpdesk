@@ -1,7 +1,7 @@
 package com.felipe.helpdesk.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.felipe.helpdesk.domain.Tecnico;
+import com.felipe.helpdesk.domain.Cliente;
 import com.felipe.helpdesk.domain.enums.Perfil;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class TecnicoDto implements Serializable {
+public class ClienteDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected Integer id;
@@ -33,18 +33,18 @@ public class TecnicoDto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     protected Instant dataCriacao = Instant.now();
 
-    public TecnicoDto(){
+    public ClienteDto(){
         addPerfis(Perfil.CLIENTE);
     }
 
-    public TecnicoDto(Tecnico tecnico) {
-        this.id = tecnico.getId();
-        this.nome = tecnico.getNome();
-        this.cpf = tecnico.getCpf();
-        this.email = tecnico.getEmail();
-        this.senha = tecnico.getSenha();
-        this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
-        this.dataCriacao = tecnico.getDataCriacao();
+    public ClienteDto(Cliente cliente) {
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+        this.email = cliente.getEmail();
+        this.senha = cliente.getSenha();
+        this.perfis = cliente.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        this.dataCriacao = cliente.getDataCriacao();
         addPerfis(Perfil.CLIENTE);
     }
 

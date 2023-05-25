@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felipe.helpdesk.domain.enums.Perfil;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -22,7 +21,6 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
-    @CPF
     @Column(unique = true)
     protected String cpf;
     @Column(unique = true)
