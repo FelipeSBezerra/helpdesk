@@ -1,5 +1,6 @@
 package com.felipe.helpdesk.domain.enums;
 
+import com.felipe.helpdesk.service.exception.IllegalArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
