@@ -41,4 +41,10 @@ public class TecnicoController {
     public ResponseEntity<TecnicoDto> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDto tecnicoDto){
         return new ResponseEntity<>(new TecnicoDto(tecnicoService.update(id, tecnicoDto)), HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        tecnicoService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

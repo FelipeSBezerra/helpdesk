@@ -24,7 +24,7 @@ public class TecnicoService {
     private PessoaRepository pessoaRepository;
 
     public Tecnico findById(Integer id) {
-        return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um técnico com o id" + id + " na base de dados"));
+        return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um técnico com o id " + id + " na base de dados"));
     }
 
     public List<Tecnico> findAll() {
@@ -56,5 +56,13 @@ public class TecnicoService {
         if (objEmail.isPresent() && objEmail.get().getId() != tecnicoDto.getId()) {
             throw new DataIntegrityViolationException("Email já cadastrado!");
         }
+    }
+
+    public void deleteById(Integer id){
+        Tecnico obj = findById(id);
+        if (obj.getChamados().size() > 0) {
+            throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado!");
+        }
+        tecnicoRepository.deleteById(id);
     }
 }
