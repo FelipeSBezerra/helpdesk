@@ -3,6 +3,7 @@ package com.felipe.helpdesk.controller;
 import com.felipe.helpdesk.domain.dto.TecnicoDto;
 import com.felipe.helpdesk.service.TecnicoService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/tecnicos")
 public class TecnicoController {
 
-    @Autowired
     private TecnicoService tecnicoService;
 
     @GetMapping(value = "/{id}")

@@ -3,6 +3,7 @@ package com.felipe.helpdesk.controller;
 import com.felipe.helpdesk.domain.dto.ChamadoDto;
 import com.felipe.helpdesk.service.ChamadoService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/chamados")
 public class ChamadoController {
 
-    @Autowired
     ChamadoService chamadoService;
 
     @GetMapping(value = "/{id}")

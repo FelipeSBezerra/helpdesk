@@ -8,6 +8,7 @@ import com.felipe.helpdesk.domain.enums.Prioridade;
 import com.felipe.helpdesk.domain.enums.Status;
 import com.felipe.helpdesk.repository.ChamadoRepository;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,11 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ChamadoService {
 
-    @Autowired
     ChamadoRepository chamadoRepository;
-
-    @Autowired
     TecnicoService tecnicoService;
-
-    @Autowired
     ClienteService clienteService;
 
     public Chamado findById(Integer id) {

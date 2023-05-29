@@ -9,19 +9,16 @@ import com.felipe.helpdesk.domain.enums.Status;
 import com.felipe.helpdesk.repository.ChamadoRepository;
 import com.felipe.helpdesk.repository.ClienteRepository;
 import com.felipe.helpdesk.repository.TecnicoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class DbService {
 
-    @Autowired
     private TecnicoRepository tecnicoRepository;
-
-    @Autowired
     private ClienteRepository clienteRepository;
-
-    @Autowired
     private ChamadoRepository chamadoRepository;
 
     public void instanciaDb(){
