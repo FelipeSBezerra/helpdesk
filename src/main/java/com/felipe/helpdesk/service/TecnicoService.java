@@ -9,18 +9,21 @@ import com.felipe.helpdesk.service.exception.DataIntegrityViolationException;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TecnicoService {
 
-    private TecnicoRepository tecnicoRepository;
-    private PessoaRepository pessoaRepository;
+    private final TecnicoRepository tecnicoRepository;
+    private final PessoaRepository pessoaRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Tecnico findById(Integer id) {
         return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um técnico com o id " + id + " na base de dados"));
@@ -33,6 +36,7 @@ public class TecnicoService {
     public Tecnico save(TecnicoDto tecnicoDto) {
         validaPorCpfEEmail(tecnicoDto);
         tecnicoDto.setId(null);
+        tecnicoDto.setSenha(passwordEncoder.encode(tecnicoDto.getSenha()));
         Tecnico obj = new Tecnico(tecnicoDto);
         return tecnicoRepository.save(obj);
     }
@@ -42,6 +46,7 @@ public class TecnicoService {
         Tecnico obj = findById(id);
         validaPorCpfEEmail(tecnicoDto);
         Tecnico tecnicoAtualizado = new Tecnico(tecnicoDto);
+        tecnicoAtualizado.setSenha(passwordEncoder.encode(tecnicoAtualizado.getSenha()));
         tecnicoAtualizado.setDataCriacao(obj.getDataCriacao());
         return tecnicoRepository.save(tecnicoAtualizado);
     }

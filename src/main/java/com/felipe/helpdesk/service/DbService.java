@@ -10,23 +10,26 @@ import com.felipe.helpdesk.repository.ChamadoRepository;
 import com.felipe.helpdesk.repository.ClienteRepository;
 import com.felipe.helpdesk.repository.TecnicoRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DbService {
 
-    private TecnicoRepository tecnicoRepository;
-    private ClienteRepository clienteRepository;
-    private ChamadoRepository chamadoRepository;
+    private final TecnicoRepository tecnicoRepository;
+    private final ClienteRepository clienteRepository;
+    private final ChamadoRepository chamadoRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void instanciaDb(){
-        Tecnico tec1 = new Tecnico(null, "Felipe Bezerra", "73617594085", "felipe@mail.com", "123456");
+        Tecnico tec1 = new Tecnico(null, "Felipe Bezerra", "73617594085", "felipe@mail.com", passwordEncoder.encode("123456"));
         tec1.setPerfis(Perfil.ADMIN);
         tec1.setPerfis(Perfil.TECNICO);
 
-        Cliente cli1 = new Cliente(null, "Ricardo", "88645874032", "ricardo@mail.com", "654321");
+        Cliente cli1 = new Cliente(null, "Ricardo", "88645874032", "ricardo@mail.com", passwordEncoder.encode("123456"));
 
         Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ABERTO, "Teste", "Chamado de teste", tec1, cli1);
 

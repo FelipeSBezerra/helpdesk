@@ -9,6 +9,7 @@ import com.felipe.helpdesk.domain.enums.Status;
 import com.felipe.helpdesk.repository.ChamadoRepository;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,12 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ChamadoService {
 
-    ChamadoRepository chamadoRepository;
-    TecnicoService tecnicoService;
-    ClienteService clienteService;
+    private final ChamadoRepository chamadoRepository;
+    private final TecnicoService tecnicoService;
+    private final ClienteService clienteService;
 
     public Chamado findById(Integer id) {
         return chamadoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um chamado com o id " + id + " na base de dados"));

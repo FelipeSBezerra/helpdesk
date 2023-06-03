@@ -9,18 +9,22 @@ import com.felipe.helpdesk.service.exception.DataIntegrityViolationException;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClienteService {
 
-    private ClienteRepository clienteRepository;
-    private PessoaRepository pessoaRepository;
+    private final ClienteRepository clienteRepository;
+    private final PessoaRepository pessoaRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     public Cliente findById(Integer id) {
         return clienteRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um cliente com o id " + id + " na base de dados"));
@@ -33,6 +37,7 @@ public class ClienteService {
     public Cliente save(ClienteDto clienteDto) {
         validaPorCpfEEmail(clienteDto);
         clienteDto.setId(null);
+        clienteDto.setSenha(passwordEncoder.encode(clienteDto.getSenha()));
         Cliente obj = new Cliente(clienteDto);
         return clienteRepository.save(obj);
     }
@@ -43,6 +48,7 @@ public class ClienteService {
         validaPorCpfEEmail(clienteDto);
         Cliente clienteAtualizado = new Cliente(clienteDto);
         clienteAtualizado.setDataCriacao(obj.getDataCriacao());
+        clienteAtualizado.setSenha(passwordEncoder.encode(clienteAtualizado.getSenha()));
         return clienteRepository.save(clienteAtualizado);
     }
 
