@@ -23,11 +23,12 @@ public class Cliente extends Pessoa{
     @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados = new ArrayList<>();
 
-    public Cliente() {
+    public Cliente() { setPerfis(Perfil.CLIENTE);
     }
 
     public Cliente(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
+        setPerfis(Perfil.CLIENTE);
     }
 
     public Cliente(ClienteDto clienteDto) {

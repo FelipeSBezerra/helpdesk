@@ -33,8 +33,7 @@ public abstract class Pessoa implements Serializable {
     protected Instant dataCriacao = Instant.now();
 
     public Pessoa() {
-        setPerfis(Perfil.CLIENTE);
-    }
+    };
 
     public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
         this.id = id;
@@ -42,8 +41,7 @@ public abstract class Pessoa implements Serializable {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        setPerfis(Perfil.CLIENTE);
-    }
+    };
 
     // Método transforma cada Integer da lista de perfis em um tipo enumerado Perfil
     public Set<Perfil> getPerfis() {

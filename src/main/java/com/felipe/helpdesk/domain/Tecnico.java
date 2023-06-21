@@ -24,12 +24,12 @@ public class Tecnico extends Pessoa{
     private List<Chamado> chamados = new ArrayList<>();
 
     public Tecnico() {
-        setPerfis(Perfil.CLIENTE);
+        setPerfis(Perfil.TECNICO);
     }
 
     public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
-        setPerfis(Perfil.CLIENTE);
+        setPerfis(Perfil.TECNICO);
     }
 
     public Tecnico(TecnicoDto tecnicoDto) {

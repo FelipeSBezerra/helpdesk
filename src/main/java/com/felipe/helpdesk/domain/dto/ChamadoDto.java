@@ -2,6 +2,7 @@ package com.felipe.helpdesk.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felipe.helpdesk.domain.Chamado;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,17 +22,13 @@ public class ChamadoDto implements Serializable {
     private Instant dataAbertura = Instant.now();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant dataFechamento;
-    @NotNull(message = "O campo PRIORIDADE é requerido")
     private Integer prioridade;
-    @NotNull(message = "O campo STATUS é requerido")
     private Integer status;
-    @NotNull(message = "O campo TÍTULO é requerido")
+    @NotBlank(message = "O campo TÍTULO é requerido")
     private String titulo;
-    @NotNull(message = "O campo OBSERVAÇÕES é requerido")
+    @NotBlank(message = "O campo OBSERVAÇÕES é requerido")
     private String observacoes;
-    @NotNull(message = "O campo TÉCNICO é requerido")
     private Integer tecnico;
-    @NotNull(message = "O campo CLIENTE é requerido")
     private Integer cliente;
     private String nomeTecnico;
     private String nomeCliente;

@@ -33,6 +33,7 @@ public class ChamadoService {
     }
 
     public Chamado save(ChamadoDto chamadoDto){
+        chamadoDto.setDataAbertura(Instant.now());
         return chamadoRepository.save(newChamado(chamadoDto));
     }
 
