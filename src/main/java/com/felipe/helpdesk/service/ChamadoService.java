@@ -50,8 +50,8 @@ public class ChamadoService {
 
     // Metodo que transforma um ChamadoDto em Chamado para que seja salvo na base de dados
     private Chamado newChamado(ChamadoDto chamadoDto) {
-        Tecnico tecnico = tecnicoService.findById(chamadoDto.getTecnico());
-        Cliente cliente = clienteService.findById(chamadoDto.getCliente());
+        Tecnico tecnico = tecnicoService.findByIdReturnEntity(chamadoDto.getTecnico());
+        Cliente cliente = clienteService.findByIdReturnEntity(chamadoDto.getCliente());
 
         Chamado chamado = new Chamado();
         if (chamadoDto.getId() != null){

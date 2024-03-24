@@ -3,14 +3,13 @@ package com.felipe.helpdesk.service;
 import com.felipe.helpdesk.domain.Pessoa;
 import com.felipe.helpdesk.domain.Tecnico;
 import com.felipe.helpdesk.domain.dto.TecnicoDto;
+import com.felipe.helpdesk.domain.dto.TecnicoResponseDto;
 import com.felipe.helpdesk.repository.PessoaRepository;
 import com.felipe.helpdesk.repository.TecnicoRepository;
 import com.felipe.helpdesk.service.exception.DataIntegrityViolationException;
 import com.felipe.helpdesk.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +25,17 @@ public class TecnicoService {
     private final PessoaRepository pessoaRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Tecnico findById(Integer id) {
+    public TecnicoResponseDto findById(Integer id) {
+        Tecnico tecnico = findByIdReturnEntity(id);
+        return new TecnicoResponseDto(tecnico);
+    }
+
+    public Tecnico findByIdReturnEntity(Integer id) {
         return tecnicoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Não existe um técnico com o id " + id + " na base de dados"));
     }
 
-    public List<Tecnico> findAll() {
-        return tecnicoRepository.findAll();
+    public List<TecnicoResponseDto> findAll() {
+        return tecnicoRepository.findAll().stream().map(TecnicoResponseDto::new).toList();
     }
 
     public Tecnico save(TecnicoDto tecnicoDto) {
@@ -43,14 +47,14 @@ public class TecnicoService {
         return tecnicoRepository.save(obj);
     }
 
-    public Tecnico update(Integer id, @Valid TecnicoDto tecnicoDto) {
+    public TecnicoResponseDto update(Integer id, @Valid TecnicoDto tecnicoDto) {
         tecnicoDto.setId(id);
-        Tecnico obj = findById(id);
+        Tecnico obj = findByIdReturnEntity(id);
         validaPorCpfEEmail(tecnicoDto);
         Tecnico tecnicoAtualizado = new Tecnico(tecnicoDto);
         tecnicoAtualizado.setSenha(passwordEncoder.encode(tecnicoAtualizado.getSenha()));
         tecnicoAtualizado.setDataCriacao(obj.getDataCriacao());
-        return tecnicoRepository.save(tecnicoAtualizado);
+        return new TecnicoResponseDto(tecnicoRepository.save(tecnicoAtualizado));
     }
 
     private void validaPorCpfEEmail(TecnicoDto tecnicoDto) {
@@ -66,7 +70,7 @@ public class TecnicoService {
     }
 
     public void deleteById(Integer id){
-        Tecnico obj = findById(id);
+        Tecnico obj = findByIdReturnEntity(id);
         if (obj.getChamados().size() > 0) {
             throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado!");
         }
