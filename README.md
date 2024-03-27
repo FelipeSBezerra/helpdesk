@@ -4,6 +4,15 @@
 
 [Documentação da API do Sistema Simplificado HelpDesk](https://documenter.getpostman.com/view/26431503/2s93zB7325)
 
+#### Observação:
+
+Durante a inicialização da aplicação, uma classe é responsável por popular o banco de dados H2. Para realizar o login e obter um Token JWT, utilize os seguintes dados na requisição de login:
+
+- email: felipe@mail.com
+- senha: 123456
+
+Todos os e-mails cadastrados durante a inicialização possuem a mesma senha.
+
 ## Descrição
 
 A API do Sistema Simplificado HelpDesk é uma aplicação que permite criar, acessar e gerenciar Ordens de Serviço, permitindo o controle dos chamados de clientes de um negócio de pequeno porte. 
